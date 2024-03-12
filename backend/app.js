@@ -4,11 +4,11 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const errorMiddleware = require('./middlewares/error');
-// const cors = require('cors');
+const cors = require('cors');
 
 const app = express();
 
-
+app.use(cors());
 // config
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
@@ -31,19 +31,11 @@ app.use('/api/v1', product);
 app.use('/api/v1', order);
 app.use('/api/v1', payment);
 
-// deployment
-__dirname = path.resolve();
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '/backend/build')))
 
-    app.get('*', (req, res) => {
-        res.sendFile(path.resolve(__dirname, 'backend', 'build', 'index.html'))
-    });
-} else {
     app.get('/', (req, res) => {
         res.send('Server is Running! 🚀');
     });
-}
+
 
 //error middleware
 app.use(errorMiddleware);

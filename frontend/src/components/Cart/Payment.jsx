@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PriceSidebar from './PriceSidebar';
@@ -12,7 +12,7 @@ import Stepper from './Stepper';
 // } from '@stripe/react-stripe-js';
 import { clearErrors } from '../../actions/orderAction';
 import { useSnackbar } from 'notistack';
-import { post } from '../../utils/paytmForm';
+// import { post } from '../../utils/paytmForm';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
@@ -28,19 +28,19 @@ const Payment = () => {
     // const elements = useElements();
     // const paymentBtn = useRef(null);
 
-    const [payDisable, setPayDisable] = useState(false);
+    const [payDisable] = useState(false);
 
-    const { shippingInfo, cartItems } = useSelector((state) => state.cart);
-    const { user } = useSelector((state) => state.user);
+    const { cartItems } = useSelector((state) => state.cart);
+    // const { user } = useSelector((state) => state.user);
     const { error } = useSelector((state) => state.newOrder);
 
     const totalPrice = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    const paymentData = {
-        amount: Math.round(totalPrice),
-        email: user.email,
-        phoneNo: shippingInfo.phoneNo,
-    };
+    // const paymentData = {
+    //     amount: Math.round(totalPrice),
+    //     email: user.email,
+    //     phoneNo: shippingInfo.phoneNo,
+    // };
 
     // const order = {
     //     shippingInfo,
@@ -48,77 +48,77 @@ const Payment = () => {
     //     totalPrice,
     // }
 
-    const submitHandler = async (e) => {
-        e.preventDefault();
+    // const submitHandler = async (e) => {
+    //     e.preventDefault();
 
-        // paymentBtn.current.disabled = true;
-        setPayDisable(true);
+    //     // paymentBtn.current.disabled = true;
+    //     setPayDisable(true);
 
-        try {
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            };
+    //     try {
+    //         const config = {
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //         };
 
-            const { data } = await axios.post(
-                'https://ecommerce-shopee.onrender.com/api/v1/payment/process',
-                paymentData,
-                config,
-            );
+    //         const { data } = await axios.post(
+    //             'https://ecommerce-shopee.onrender.com/api/v1/payment/process',
+    //             paymentData,
+    //             config,
+    //         );
 
-            let info = {
-                action: "https://securegw-stage.paytm.in/order/process",
-                params: data.paytmParams
-            }
+    //         let info = {
+    //             action: "https://securegw-stage.paytm.in/order/process",
+    //             params: data.paytmParams
+    //         }
 
-            post(info)
+    //         post(info)
 
-            // if (!stripe || !elements) return;
+    //         // if (!stripe || !elements) return;
 
-            // const result = await stripe.confirmCardPayment(client_secret, {
-            //     payment_method: {
-            //         card: elements.getElement(CardNumberElement),
-            //         billing_details: {
-            //             name: user.name,
-            //             email: user.email,
-            //             address: {
-            //                 line1: shippingInfo.address,
-            //                 city: shippingInfo.city,
-            //                 country: shippingInfo.country,
-            //                 state: shippingInfo.state,
-            //                 postal_code: shippingInfo.pincode,
-            //             },
-            //         },
-            //     },
-            // });
+    //         // const result = await stripe.confirmCardPayment(client_secret, {
+    //         //     payment_method: {
+    //         //         card: elements.getElement(CardNumberElement),
+    //         //         billing_details: {
+    //         //             name: user.name,
+    //         //             email: user.email,
+    //         //             address: {
+    //         //                 line1: shippingInfo.address,
+    //         //                 city: shippingInfo.city,
+    //         //                 country: shippingInfo.country,
+    //         //                 state: shippingInfo.state,
+    //         //                 postal_code: shippingInfo.pincode,
+    //         //             },
+    //         //         },
+    //         //     },
+    //         // });
 
-            // if (result.error) {
-            //     paymentBtn.current.disabled = false;
-            //     enqueueSnackbar(result.error.message, { variant: "error" });
-            // } else {
-            //     if (result.paymentIntent.status === "succeeded") {
+    //         // if (result.error) {
+    //         //     paymentBtn.current.disabled = false;
+    //         //     enqueueSnackbar(result.error.message, { variant: "error" });
+    //         // } else {
+    //         //     if (result.paymentIntent.status === "succeeded") {
 
-            //         order.paymentInfo = {
-            //             id: result.paymentIntent.id,
-            //             status: result.paymentIntent.status,
-            //         };
+    //         //         order.paymentInfo = {
+    //         //             id: result.paymentIntent.id,
+    //         //             status: result.paymentIntent.status,
+    //         //         };
 
-            //         dispatch(newOrder(order));
-            //         dispatch(emptyCart());
+    //         //         dispatch(newOrder(order));
+    //         //         dispatch(emptyCart());
 
-            //         navigate("/order/success");
-            //     } else {
-            //         enqueueSnackbar("Processing Payment Failed!", { variant: "error" });
-            //     }
-            // }
+    //         //         navigate("/order/success");
+    //         //     } else {
+    //         //         enqueueSnackbar("Processing Payment Failed!", { variant: "error" });
+    //         //     }
+    //         // }
 
-        } catch (error) {
-            // paymentBtn.current.disabled = false;
-            setPayDisable(false);
-            enqueueSnackbar(error, { variant: "error" });
-        }
-    };
+    //     } catch (error) {
+    //         // paymentBtn.current.disabled = false;
+    //         setPayDisable(false);
+    //         enqueueSnackbar(error, { variant: "error" });
+    //     }
+    // };
 
     useEffect(() => {
         if (error) {
@@ -143,7 +143,7 @@ const Payment = () => {
                         <Stepper activeStep={3}>
                             <div className="w-full bg-white">
 
-                                <form onSubmit={(e) => submitHandler(e)} autoComplete="off" className="flex flex-col justify-start gap-2 w-full mx-8 my-4 overflow-hidden">
+                                <form  autoComplete="off" className="flex flex-col justify-start gap-2 w-full mx-8 my-4 overflow-hidden">
                                     <FormControl>
                                         <RadioGroup
                                             aria-labelledby="payment-radio-group"
